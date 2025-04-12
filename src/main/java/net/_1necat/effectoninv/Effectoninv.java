@@ -74,6 +74,24 @@ public class Effectoninv extends JavaPlugin {
                     } else {
                         checkAndRemoveStrengthEffect(player);
                     }
+                    // プレイヤーのインベントリの4番目のスロットを取得
+                    ItemStack itemInSlot4 = player.getInventory().getItem(12);
+                    if  (itemInSlot4 != null) {
+                        ItemMeta meta4 = itemInSlot4.getItemMeta();
+                        if (meta4 != null) {
+                            String itemName4 = meta4.getDisplayName();
+                            if (itemInSlot4.getType() == Material.IRON_NUGGET && meta4.hasDisplayName() && (itemName4.equals(ChatColor.WHITE + "" + ChatColor.BOLD + "折りたたみ傘 （青)") || (itemName4.equals(ChatColor.WHITE + "" + ChatColor.BOLD + "折りたたみ傘（ピンク)")))) {
+                                // 幸運3の効果を付与
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, Integer.MAX_VALUE, 2, false, false));
+                            } else {
+                                checkAndRemoveLuckEffect(player);
+                            }
+                        } else {
+                            checkAndRemoveLuckEffect(player);
+                        }
+                    } else {
+                        checkAndRemoveLuckEffect(player);
+                    }
                 }
             }
         }.runTaskTimer(this, 0L, 2L); // 1/10秒ごとにチェック
@@ -118,6 +136,19 @@ public class Effectoninv extends JavaPlugin {
         }
     }
 
+    public void checkAndRemoveLuckEffect(Player player) {
+        PotionEffect LuckEffect = player.getPotionEffect(PotionEffectType.LUCK);
+        if (LuckEffect != null) {
+            // エフェクトの持続時間を取得（単位はティック、20ティック＝1秒）
+            int durationTicks = LuckEffect.getDuration();
+            // 30分以上かを確認（30分 = 30 * 60 * 20ティック）
+            int thirtyMinutesInTicks = 30 * 60 * 20;
+            if (durationTicks >= thirtyMinutesInTicks) {
+                player.removePotionEffect(PotionEffectType.LUCK);
+            }
+        }
+    }
+
     @Override
     public void onDisable() {
         // プラグインが無効化された際の処理
@@ -126,6 +157,7 @@ public class Effectoninv extends JavaPlugin {
             checkAndRemoveSpeedEffect(player);
             checkAndRemoveResistanceEffect(player);
             checkAndRemoveStrengthEffect(player);
+            checkAndRemoveLuckEffect(player);
         }
     }
 }
