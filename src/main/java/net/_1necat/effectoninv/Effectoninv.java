@@ -80,7 +80,7 @@ public class Effectoninv extends JavaPlugin {
                         ItemMeta meta4 = itemInSlot4.getItemMeta();
                         if (meta4 != null) {
                             String itemName4 = meta4.getDisplayName();
-                            if (itemInSlot4.getType() == Material.IRON_NUGGET && meta4.hasDisplayName() && (itemName4.equals(ChatColor.WHITE + "" + ChatColor.BOLD + "折りたたみ傘 （青)") || (itemName4.equals(ChatColor.WHITE + "" + ChatColor.BOLD + "折りたたみ傘（ピンク)")))) {
+                            if (itemInSlot4.getType() == Material.IRON_NUGGET && meta4.hasDisplayName() && (itemName4.equals(ChatColor.WHITE + "" + ChatColor.BOLD + "折りたたみ傘 (青)") || (itemName4.equals(ChatColor.WHITE + "" + ChatColor.BOLD + "折りたたみ傘(ピンク)")))) {
                                 // 幸運3の効果を付与
                                 player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, Integer.MAX_VALUE, 2, false, false));
                             } else {
